@@ -1,6 +1,6 @@
-package org.I0Itec.zkclient.testutil;
+package org.i0itec.zkclient.testutil;
 
-import org.I0Itec.zkclient.ZkClient;
+import org.i0itec.zkclient.ZkClient;
 
 import java.util.List;
 

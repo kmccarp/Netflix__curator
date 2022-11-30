@@ -1,13 +1,13 @@
-package org.I0Itec.zkclient;
+package org.i0itec.zkclient;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Random;
 
-import org.I0Itec.zkclient.serialize.BytesPushThroughSerializer;
-import org.I0Itec.zkclient.serialize.SerializableSerializer;
-import org.I0Itec.zkclient.testutil.ZkTestSystem;
+import org.i0itec.zkclient.serialize.BytesPushThroughSerializer;
+import org.i0itec.zkclient.serialize.SerializableSerializer;
+import org.i0itec.zkclient.testutil.ZkTestSystem;
 import org.junit.Rule;
 import org.junit.Test;
 
