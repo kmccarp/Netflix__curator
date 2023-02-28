@@ -1,4 +1,4 @@
-package org.I0Itec.zkclient;
+package org.i0itec.zkclient;
 
 import org.apache.zookeeper.CreateMode;
 import org.junit.Assert;
