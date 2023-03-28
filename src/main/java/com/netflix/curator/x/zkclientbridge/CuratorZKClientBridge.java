@@ -15,7 +15,7 @@
  */
 package com.netflix.curator.x.zkclientbridge;
 
-import org.I0Itec.zkclient.IZkConnection;
+import org.i0itec.zkclient.IZkConnection;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.api.BackgroundCallback;
 import org.apache.curator.framework.api.CuratorEvent;
@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class CuratorZKClientBridge implements IZkConnection
 {
     private final CuratorFramework curator;
-    private final AtomicReference<CuratorListener> listener = new AtomicReference<CuratorListener>(null);
+    private final AtomicReference<CuratorListener> listener = new AtomicReference<>(null);
 
     /**
      * @param curator Curator instance to bridge
@@ -70,15 +70,10 @@ public class CuratorZKClientBridge implements IZkConnection
     {
         if ( watcher != null )
         {
-            CuratorListener     localListener = new CuratorListener()
-            {
-                @Override
-                public void eventReceived(CuratorFramework client, CuratorEvent event) throws Exception
+            CuratorListener     localListener = (client, event) -> {
+                if (event.getWatchedEvent() != null)
                 {
-                    if ( event.getWatchedEvent() != null )
-                    {
-                        watcher.process(event.getWatchedEvent());
-                    }
+                    watcher.process(event.getWatchedEvent());
                 }
             };
             curator.getCuratorListenable().addListener(localListener);
@@ -86,14 +81,9 @@ public class CuratorZKClientBridge implements IZkConnection
 
             try
             {
-                BackgroundCallback callback = new BackgroundCallback()
-                {
-                    @Override
-                    public void processResult(CuratorFramework client, CuratorEvent event) throws Exception
-                    {
-                        WatchedEvent        fakeEvent = new WatchedEvent(Watcher.Event.EventType.None, curator.getZookeeperClient().isConnected() ? Watcher.Event.KeeperState.SyncConnected : Watcher.Event.KeeperState.Disconnected, null);
-                        watcher.process(fakeEvent);
-                    }
+                BackgroundCallback callback = (client, event) -> {
+                    WatchedEvent        fakeEvent = new WatchedEvent(Watcher.Event.EventType.None, curator.getZookeeperClient().isConnected() ? Watcher.Event.KeeperState.SyncConnected : Watcher.Event.KeeperState.Disconnected, null);
+                    watcher.process(fakeEvent);
                 };
                 curator.checkExists().inBackground(callback).forPath("/foo");
             }
