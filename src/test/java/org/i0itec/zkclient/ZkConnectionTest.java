@@ -1,6 +1,6 @@
-package org.I0Itec.zkclient;
+package org.i0itec.zkclient;
 
-import org.I0Itec.zkclient.testutil.ZkTestSystem;
+import org.i0itec.zkclient.testutil.ZkTestSystem;
 import org.junit.Rule;
 
 public class ZkConnectionTest extends AbstractConnectionTest {
