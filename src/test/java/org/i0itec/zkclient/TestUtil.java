@@ -1,4 +1,4 @@
-package org.I0Itec.zkclient;
+package org.i0itec.zkclient;
 
 import org.mockito.exceptions.base.MockitoAssertionError;
 
