@@ -1,9 +1,9 @@
-package org.I0Itec.zkclient.util;
+package org.i0itec.zkclient.util;
 
 import junit.framework.TestCase;
-import org.I0Itec.zkclient.ZkClient;
-import org.I0Itec.zkclient.testutil.ZkPathUtil;
-import org.I0Itec.zkclient.testutil.ZkTestSystem;
+import org.i0itec.zkclient.ZkClient;
+import org.i0itec.zkclient.testutil.ZkPathUtil;
+import org.i0itec.zkclient.testutil.ZkTestSystem;
 import org.apache.curator.test.TestingServer;
 
 public class ZkPathUtilTest extends TestCase {
