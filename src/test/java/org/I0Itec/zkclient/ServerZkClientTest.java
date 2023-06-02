@@ -76,90 +76,90 @@ public class ServerZkClientTest extends AbstractBaseZkClientTest {
         assertFalse(_client.waitUntilConnected(100, TimeUnit.MILLISECONDS));
     }
 
-/*
-    JLZ - can't emulate
+    /*
+        JLZ - can't emulate
+    
+        @Test(timeout = 15000)
+        public void testRetryUntilConnected_SessionExpiredException() {
+            LOG.info("--- testRetryUntilConnected_SessionExpiredException");
+    
+            // Use a tick time of 100ms, because the minimum session timeout is 2 x tick-time.
+            // ZkServer zkServer = TestUtil.startZkServer("ZkClientTest-testSessionExpiredException", 4711, 100);
+            Gateway gateway = new Gateway(4712, 4711);
+            gateway.start();
+    
+            // Use a session timeout of 200ms
+            final ZkClient zkClient = ZkTestSystem.createZkClient("localhost:4712", 200, 5000);
+    
+            gateway.stop();
+    
+            // Start server in 600ms, the session should have expired by then
+            new DeferredGatewayStarter(gateway, 600).start();
+    
+            // This should work as soon as a new session has been created (and the connection is reestablished), if it fails
+            // it throws a SessionExpiredException
+            zkClient.retryUntilConnected(new Callable<Object>() {
+    
+                @Override
+                public Object call() throws Exception {
+                    zkClient.exists("/a");
+                    return null;
+                }
+            });
+    
+            zkClient.close();
+            // zkServer.shutdown();
+            gateway.stop();
+        }
+    */
 
-    @Test(timeout = 15000)
-    public void testRetryUntilConnected_SessionExpiredException() {
-        LOG.info("--- testRetryUntilConnected_SessionExpiredException");
-
-        // Use a tick time of 100ms, because the minimum session timeout is 2 x tick-time.
-        // ZkServer zkServer = TestUtil.startZkServer("ZkClientTest-testSessionExpiredException", 4711, 100);
-        Gateway gateway = new Gateway(4712, 4711);
-        gateway.start();
-
-        // Use a session timeout of 200ms
-        final ZkClient zkClient = ZkTestSystem.createZkClient("localhost:4712", 200, 5000);
-
-        gateway.stop();
-
-        // Start server in 600ms, the session should have expired by then
-        new DeferredGatewayStarter(gateway, 600).start();
-
-        // This should work as soon as a new session has been created (and the connection is reestablished), if it fails
-        // it throws a SessionExpiredException
-        zkClient.retryUntilConnected(new Callable<Object>() {
-
-            @Override
-            public Object call() throws Exception {
-                zkClient.exists("/a");
-                return null;
-            }
-        });
-
-        zkClient.close();
-        // zkServer.shutdown();
-        gateway.stop();
-    }
-*/
-
-/*
-    JLZ - can't emulate
-
-    @Test(timeout = 15000)
-    public void testChildListenerAfterSessionExpiredException() throws Exception {
-        LOG.info("--- testChildListenerAfterSessionExpiredException");
-
-        int sessionTimeout = 200;
-        ZkClient connectedClient = _zkServer.getZkClient();
-        connectedClient.createPersistent("/root");
-
-        Gateway gateway = new Gateway(4712, 4711);
-        gateway.start();
-
-        final ZkClient disconnectedZkClient = new ZkClient("localhost:4712", sessionTimeout, 5000);
-        final Holder<List<String>> children = new Holder<List<String>>();
-        disconnectedZkClient.subscribeChildChanges("/root", new IZkChildListener() {
-
-            @Override
-            public void handleChildChange(String parentPath, List<String> currentChilds) throws Exception {
-                children.set(currentChilds);
-            }
-        });
-
-        gateway.stop();
-
-        // The connected client now created a new child node
-        connectedClient.createPersistent("/root/node");
-
-        // Wait for 3 x sessionTimeout, the session should have expired by then and start the gateway again
-        Thread.sleep(sessionTimeout * 3);
-        gateway.start();
-
-        Boolean hasOneChild = TestUtil.waitUntil(true, new Callable<Boolean>() {
-
-            @Override
-            public Boolean call() throws Exception {
-                return children.get() != null && children.get().size() == 1;
-            }
-        }, TimeUnit.SECONDS, 5);
-
-        assertTrue(hasOneChild);
-
-        disconnectedZkClient.close();
-        gateway.stop();
-    }
-*/
+    /*
+        JLZ - can't emulate
+    
+        @Test(timeout = 15000)
+        public void testChildListenerAfterSessionExpiredException() throws Exception {
+            LOG.info("--- testChildListenerAfterSessionExpiredException");
+    
+            int sessionTimeout = 200;
+            ZkClient connectedClient = _zkServer.getZkClient();
+            connectedClient.createPersistent("/root");
+    
+            Gateway gateway = new Gateway(4712, 4711);
+            gateway.start();
+    
+            final ZkClient disconnectedZkClient = new ZkClient("localhost:4712", sessionTimeout, 5000);
+            final Holder<List<String>> children = new Holder<List<String>>();
+            disconnectedZkClient.subscribeChildChanges("/root", new IZkChildListener() {
+    
+                @Override
+                public void handleChildChange(String parentPath, List<String> currentChilds) throws Exception {
+                    children.set(currentChilds);
+                }
+            });
+    
+            gateway.stop();
+    
+            // The connected client now created a new child node
+            connectedClient.createPersistent("/root/node");
+    
+            // Wait for 3 x sessionTimeout, the session should have expired by then and start the gateway again
+            Thread.sleep(sessionTimeout * 3);
+            gateway.start();
+    
+            Boolean hasOneChild = TestUtil.waitUntil(true, new Callable<Boolean>() {
+    
+                @Override
+                public Boolean call() throws Exception {
+                    return children.get() != null && children.get().size() == 1;
+                }
+            }, TimeUnit.SECONDS, 5);
+    
+            assertTrue(hasOneChild);
+    
+            disconnectedZkClient.close();
+            gateway.stop();
+        }
+    */
 
     @Test(timeout = 10000)
     public void testZkClientConnectedToGatewayClosesQuickly() throws Exception {

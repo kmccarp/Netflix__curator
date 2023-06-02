@@ -28,7 +28,7 @@ public class ZkTestSystem extends ExternalResource {
             _zkServer = new TestingServer(PORT);
             _zkClient = ZkTestSystem.createZkClient(_zkServer.getConnectString());
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
         LOG.info("~~~~~~~~~~~~~~~ zk system started ~~~~~~~~~~~~~~~");
@@ -70,7 +70,7 @@ public class ZkTestSystem extends ExternalResource {
                         getInstance().getZkClient().close();
                         getInstance().getZkServer().close();
                     }
-                    catch ( IOException e ) {
+                    catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -103,7 +103,7 @@ public class ZkTestSystem extends ExternalResource {
         {
             return new CuratorZKClientBridge(client);
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             throw new RuntimeException(e);
         }
@@ -115,7 +115,7 @@ public class ZkTestSystem extends ExternalResource {
             Timing                  timing = new Timing();
             return new ZkClient(createZkConnection(connectString), timing.connection());
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             throw new RuntimeException(e);
         }

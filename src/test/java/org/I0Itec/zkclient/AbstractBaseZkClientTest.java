@@ -104,7 +104,7 @@ public abstract class AbstractBaseZkClientTest {
 
             @Override
             public void handleDataChange(String dataPath, Object data) throws Exception {
-                holder.set((String) data);
+                holder.set((String)data);
             }
 
             @Override

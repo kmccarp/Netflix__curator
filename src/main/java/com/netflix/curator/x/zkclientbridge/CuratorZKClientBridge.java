@@ -68,14 +68,14 @@ public class CuratorZKClientBridge implements IZkConnection
     @Override
     public void connect(final Watcher watcher)
     {
-        if ( watcher != null )
+        if (watcher != null)
         {
             CuratorListener     localListener = new CuratorListener()
             {
                 @Override
                 public void eventReceived(CuratorFramework client, CuratorEvent event) throws Exception
                 {
-                    if ( event.getWatchedEvent() != null )
+                    if (event.getWatchedEvent() != null)
                     {
                         watcher.process(event.getWatchedEvent());
                     }
@@ -97,7 +97,7 @@ public class CuratorZKClientBridge implements IZkConnection
                 };
                 curator.checkExists().inBackground(callback).forPath("/foo");
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
                 throw new RuntimeException(e);
             }
@@ -110,7 +110,7 @@ public class CuratorZKClientBridge implements IZkConnection
         // NOTE: the curator instance is NOT closed here
 
         CuratorListener localListener = listener.getAndSet(null);
-        if ( localListener != null )
+        if (localListener != null)
         {
             curator.getCuratorListenable().removeListener(localListener);
         }
@@ -123,7 +123,7 @@ public class CuratorZKClientBridge implements IZkConnection
         {
             return curator.create().withMode(mode).forPath(path, data);
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             adjustException(e);
         }
@@ -137,7 +137,7 @@ public class CuratorZKClientBridge implements IZkConnection
         {
             curator.delete().forPath(path);
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             adjustException(e);
         }
@@ -150,7 +150,7 @@ public class CuratorZKClientBridge implements IZkConnection
         {
             return watch ? (curator.checkExists().watched().forPath(path) != null) : (curator.checkExists().forPath(path) != null);
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             adjustException(e);
         }
@@ -164,7 +164,7 @@ public class CuratorZKClientBridge implements IZkConnection
         {
             return watch ? curator.getChildren().watched().forPath(path) : curator.getChildren().forPath(path);
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             adjustException(e);
         }
@@ -176,16 +176,15 @@ public class CuratorZKClientBridge implements IZkConnection
     {
         try
         {
-            if ( stat != null )
+            if (stat != null)
             {
                 return watch ? curator.getData().storingStatIn(stat).watched().forPath(path) : curator.getData().storingStatIn(stat).forPath(path);
-            }
-            else
+            }else
             {
                 return watch ? curator.getData().watched().forPath(path) : curator.getData().forPath(path);
             }
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             adjustException(e);
         }
@@ -204,7 +203,7 @@ public class CuratorZKClientBridge implements IZkConnection
         {
             curator.setData().withVersion(expectedVersion).forPath(path, data);
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             adjustException(e);
         }
@@ -218,7 +217,7 @@ public class CuratorZKClientBridge implements IZkConnection
         {
             return curator.getZookeeperClient().getZooKeeper().getState();
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             throw new RuntimeException(e);
         }
@@ -232,7 +231,7 @@ public class CuratorZKClientBridge implements IZkConnection
             Stat            stat = curator.checkExists().forPath(path);
             return (stat != null) ? stat.getCtime() : 0;
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             adjustException(e);
         }
@@ -247,12 +246,12 @@ public class CuratorZKClientBridge implements IZkConnection
 
     private void adjustException(Exception e) throws KeeperException, InterruptedException
     {
-        if ( e instanceof KeeperException )
+        if (e instanceof KeeperException)
         {
             throw (KeeperException)e;
         }
 
-        if ( e instanceof InterruptedException )
+        if (e instanceof InterruptedException)
         {
             throw (InterruptedException)e;
         }
