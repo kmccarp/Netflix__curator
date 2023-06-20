@@ -1,4 +1,4 @@
-package org.I0Itec.zkclient.testutil;
+package org.i0itec.zkclient.testutil;
 
 import org.I0Itec.zkclient.ZkClient;
 
@@ -33,10 +33,10 @@ public class ZkPathUtil {
                 nestedPath = startPath + "/" + node;
             }
             if (pathFilter.showChilds(nestedPath)) {
-                builder.append(getSpaces(level - 1) + "'-" + "+" + node + "\n");
+                builder.append(getSpaces(level - 1) + "'-" + "+").append(node).append("\n");
                 addChildrenToStringBuilder(zkClient, pathFilter, level + 1, builder, nestedPath);
             } else {
-                builder.append(getSpaces(level - 1) + "'-" + "-" + node + " (contents hidden)\n");
+                builder.append(getSpaces(level - 1) + "'-" + "-").append(node).append(" (contents hidden)\n");
             }
         }
     }
