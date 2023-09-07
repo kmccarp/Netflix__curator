@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class CuratorZKClientBridge implements IZkConnection
 {
     private final CuratorFramework curator;
-    private final AtomicReference<CuratorListener> listener = new AtomicReference<CuratorListener>(null);
+    private final AtomicReference<CuratorListener> listener = new AtomicReference<>(null);
 
     /**
      * @param curator Curator instance to bridge

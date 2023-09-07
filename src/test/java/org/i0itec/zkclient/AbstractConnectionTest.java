@@ -1,6 +1,6 @@
-package org.I0Itec.zkclient;
+package org.i0itec.zkclient;
 
-import org.I0Itec.zkclient.testutil.ZkPathUtil;
+import org.i0itec.zkclient.testutil.ZkPathUtil;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.junit.Ignore;

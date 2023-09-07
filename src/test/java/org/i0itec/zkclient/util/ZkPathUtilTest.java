@@ -1,4 +1,4 @@
-package org.I0Itec.zkclient.util;
+package org.i0itec.zkclient.util;
 
 import junit.framework.TestCase;
 import org.I0Itec.zkclient.ZkClient;
